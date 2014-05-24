@@ -1,9 +1,26 @@
 #!/usr/bin/env node
 
-var net = require("net");
+var bencode = require("bencode"),
+    burro = require("burro"),
+    net = require("net"),
+    stream = require("readable-stream");
+
+var ApplicationStream = function ApplicationStream(options) {
+  options = options || {};
+  options.objectMode = true;
+
+  stream.Transform.call(this, options);
+};
+
+ApplicationStream.prototype = Object.create(stream.Transform.prototype, {constructor: {value: ApplicationStream}});
 
 var server = net.createServer(function(socket) {
-  socket.pipe(socket);
+  var unframer = new burro.Unframer(),
+      framer = new burro.Framer();
+
+  var applicationStream = new ApplicationStream();
+
+  socket.pipe(unframer).pipe(applicationStream).pipe(framer).pipe(socket);
 });
 
 server.listen(process.env.PORT || 3000, function() {

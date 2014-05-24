@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/eow/server",
   "dependencies": {
-    "bencode": "^0.6.0"
+    "bencode": "^0.6.0",
+    "burro": "^0.4.13",
+    "readable-stream": "^1.0.27-1"
   }
 }
