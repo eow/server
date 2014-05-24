@@ -2,23 +2,9 @@
 
 var bencode = require("bencode"),
     burro = require("burro"),
-    net = require("net"),
-    stream = require("readable-stream");
+    net = require("net");
 
-var ApplicationStream = function ApplicationStream(options) {
-  options = options || {};
-  options.objectMode = true;
-
-  stream.Transform.call(this, options);
-};
-
-ApplicationStream.prototype = Object.create(stream.Transform.prototype, {constructor: {value: ApplicationStream}});
-
-ApplicationStream.prototype._transform = function _transform(input, encoding, done) {
-  this.push(input);
-
-  return done();
-};
+var ApplicationStream = require("./lib/application-stream");
 
 var server = net.createServer(function(socket) {
   var unframer = new burro.Unframer(),
