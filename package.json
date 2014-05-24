@@ -1,0 +1,27 @@
+{
+  "name": "eow-server",
+  "version": "0.0.0",
+  "description": "server for end of world",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R tap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/eow/server.git"
+  },
+  "keywords": [
+    "eow",
+    "game",
+    "server"
+  ],
+  "author": "EOW Team",
+  "contributors": [
+    "Conrad Pankoff <deoxxa@fknsrs.biz> (http://www.fknsrs.biz/)"
+  ],
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/eow/server/issues"
+  },
+  "homepage": "https://github.com/eow/server"
+}
