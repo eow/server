@@ -29,5 +29,8 @@
     "bencode": "^0.6.0",
     "burro": "^0.4.13",
     "readable-stream": "^1.0.27-1"
+  },
+  "devDependencies": {
+    "mocha": "^1.19.0"
   }
 }
