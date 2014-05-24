@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/eow/server/issues"
   },
-  "homepage": "https://github.com/eow/server"
+  "homepage": "https://github.com/eow/server",
+  "dependencies": {
+    "bencode": "^0.6.0"
+  }
 }
