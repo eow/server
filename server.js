@@ -14,6 +14,12 @@ var ApplicationStream = function ApplicationStream(options) {
 
 ApplicationStream.prototype = Object.create(stream.Transform.prototype, {constructor: {value: ApplicationStream}});
 
+ApplicationStream.prototype._transform = function _transform(input, encoding, done) {
+  this.push(input);
+
+  return done();
+};
+
 var server = net.createServer(function(socket) {
   var unframer = new burro.Unframer(),
       framer = new burro.Framer();
