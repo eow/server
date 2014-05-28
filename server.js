@@ -14,6 +14,7 @@ var server = net.createServer(function(socket) {
   var framer   = new burro.Framer();
 
   var user = application.createUser();
+  user.load();
 
   socket.pipe(unframer).pipe(user).pipe(framer).pipe(socket);
 

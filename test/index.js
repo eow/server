@@ -11,6 +11,8 @@ describe("the GAME", function() {
     application = new Application();
     user1 = application.createUser();
     user2 = application.createUser();
+    user1.load();
+    user2.load();
 
     application.start(done);
 
