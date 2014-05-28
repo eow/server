@@ -4,17 +4,22 @@ var bencode = require("bencode"),
     burro = require("burro"),
     net = require("net");
 
-var ApplicationStream = require("./lib/application-stream");
+var Application = require("./lib/application");
+
+var application = new Application();
 
 var server = net.createServer(function(socket) {
-  var unframer = new burro.Unframer(),
-      framer = new burro.Framer();
+  
+  var unframer = new burro.Unframer();
+  var framer   = new burro.Framer();
 
-  var applicationStream = new ApplicationStream();
+  var user = application.createUser();
 
-  socket.pipe(unframer).pipe(applicationStream).pipe(framer).pipe(socket);
+  socket.pipe(unframer).pipe(user).pipe(framer).pipe(socket);
+
 });
 
 server.listen(process.env.PORT || 3000, function() {
+	application.start();
   console.log("listening");
 });
