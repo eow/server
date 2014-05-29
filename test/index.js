@@ -4,13 +4,14 @@ var Application = require("../lib/application");
 
 describe("the GAME", function() {
 
-  var application, user1, user2;
+  var application, user1, user2, entity;
 
   before(function(done) {
 
     application = new Application();
     user1 = application.createUser();
     user2 = application.createUser();
+    entity = application.createEntity();
     user1.load();
     user2.load();
 
@@ -18,11 +19,43 @@ describe("the GAME", function() {
 
   });
 
+  describe("an entity", function() {
+
+    it("should have a random starting position", function(done) {
+
+      assert.notEqual(entity.x, 0);
+      assert.notEqual(entity.y, 0);
+      done();
+
+    });
+
+    it("should be able to dynamically inherit classes", function(done) {
+
+      entity.canMove();
+      assert.equal(entity.velocity, 0);
+      entity.canBeAttacked();
+      assert.equal(entity.health, 100);
+      done();
+
+    });
+
+    it("should be destroyed when it takes too much damage", function(done) {
+
+      var destroyed = entity.hit(1);
+      assert.equal(destroyed, false);
+      destroyed = entity.hit(99999999);
+      assert.equal(destroyed, true);
+      done();
+
+    });
+
+  });
+
   describe("a user", function() {
 
     var _user1name = "user1";
 
-    it("should not be able to do anything when not logged in", function(done) {
+    it("should not be able to do anything when not 'logged in'", function(done) {
 
       user1.once("data", function(response) {
 
