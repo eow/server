@@ -1,5 +1,7 @@
 var assert = require("chai").assert;
 
+var async = require('async');
+
 var Application = require("../lib/application");
 
 describe("the GAME", function() {
@@ -9,31 +11,33 @@ describe("the GAME", function() {
   before(function(done) {
 
     application = new Application();
-    user1 = application.createUser();
-    user2 = application.createUser();
-    entity = application.createEntity();
-    user1.load();
-    user2.load();
+    user1       = application.createUser();
+    user2       = application.createUser();
+    entity      = application.createEntity();
 
-    application.start(done);
+    async.parallel([
+      user1.load,
+      user2.load
+    ], done);
 
   });
 
   describe("an entity", function() {
 
-    it("should have a random starting position", function(done) {
+    it("should have a fixed starting position", function(done) {
 
-      assert.notEqual(entity.x, 0);
-      assert.notEqual(entity.y, 0);
+      assert.equal(entity.x, 0);
+      assert.equal(entity.y, 0);
       done();
 
     });
 
     it("should be able to dynamically inherit classes", function(done) {
 
-      entity.canMove();
+      assert.equal(entity.velocity, undefined);
+      entity.loadComponent('moveable');
       assert.equal(entity.velocity, 0);
-      entity.canBeAttacked();
+      entity.loadComponent('attackable');
       assert.equal(entity.health, 100);
       done();
 
@@ -68,7 +72,7 @@ describe("the GAME", function() {
       user1.write({
         type: "chat",
         data: {
-          target: "user2", // doesn't exist yet, anyway
+          target: "user2",
           message: "test"
         }
       });
